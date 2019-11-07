@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import "./App.css";
 import Amplify from 'aws-amplify';
 import { BrowserRouter as Router, Switch, Route, Match } from "react-router-dom"
-import AppContent from "./components/AppContent"
-import LandingContent from "./landingComponents/LandingContent"
-// import { ProtectedRoute } from "./CustomRoutes"
-import { ProtectedRoute } from "mvp-webapp"
-import NotFound from "./general/NotFound";
-
+import Landing from "./components/landing/Index"
+import NotFound from "./components/general/NotFound";
+import { combineReducers, createStore } from "redux"
+import { ProtectedRoute } from "./CustomRoutes"
+import { Provider } from "react-redux"
+import { Helmet } from "react-helmet"
 
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 Amplify.configure({
@@ -40,7 +40,89 @@ Amplify.configure({
     }
 });
 
-window.title = 'your title'
+const slideUp = (state={open: false, content: null}, action) => {
+    switch (action.type) {
+        case "OPEN_SLIDEUP":
+            console.log('opening slideup')
+            return {
+                open: true,
+                content: action.content
+            }
+        case "CLOSE_SLIDEUP":
+            console.log('closing slideup')
+            return {
+                open: false,
+                content: null
+            }
+        default:
+            return state
+    }
+}
+
+const modal = (state={open: false, content: null}, action) => {
+    switch (action.type) {
+        case "OPEN_MODAL": 
+            console.log('opening modal')
+            return {
+                open: true,
+                content: action.content
+            }
+        case "CLOSE_MODAL":
+            console.log('closing modal')
+            return {
+                open: false,
+                content: null
+            }
+        default:
+            return state
+    }
+}
+
+const sideNav = (state = {open: false}, action) => {
+    switch (action.type) {
+        case "TOGGLE_SIDENAV" :
+            console.log('toggling sidenav')
+            return {
+                ...state,
+                open: !state.open
+            }
+        default:
+            return state
+    }
+}
+const notify = (state={show: false}, action) => {
+    switch (action.type) {
+        case "NOTIFY":
+            console.log('notifying')
+            return {
+                show: true,
+                content: action.content
+            }
+        case "HIDE_NOTIFY":
+            return {
+                show: false,
+                content: null
+            }
+        default:
+            return state
+    }
+}
+
+const app = (state={}, action) => {
+    return {
+        name: 'MyApp'
+    }
+}
+
+const reducer = combineReducers({
+    modal,
+    slideUp,
+    sideNav,
+    notify,
+    app
+})
+
+export const store = createStore(reducer)
 
 class App extends Component {
 
@@ -53,17 +135,22 @@ class App extends Component {
     render() {
         console.log('rendering app')
         return (
-            <Router >                   
-                <div className="App">
-                    <Switch>
-                        <ProtectedRoute path="/app" component={AppContent}/>
-                        <Route path="/" component={LandingContent} />
-                        <Route component={NotFound} path=""/> 
-                    </Switch>
-                </div>
-            </Router>
+            <Provider store={store}>
+                <Router >                   
+                    <div className="App">
+                        <Helmet>
+                            <title>{store.getState().app.name}</title>
+                        </Helmet>
+                        <Switch>
+                            {/* <ProtectedRoute path ="/app" component={AppContent} /> */}
+                            <Route path="/" component={Landing} />
+                            <Route component={NotFound} path=""/> 
+                        </Switch>
+                    </div>
+                </Router>
+            </Provider>
         )
     }
 }
 
-export default App;
+export default App;//withAuthenticator(App);
