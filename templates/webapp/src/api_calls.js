@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import { Auth } from "aws-amplify"
 
 export const makeGetRequest = (endpoint, callback, handleErr=(err)=>{console.log(err)}) => {
@@ -13,7 +12,7 @@ export const makeGetRequest = (endpoint, callback, handleErr=(err)=>{console.log
                     'Content-Type': 'application/json'
                 }
             }
-            var url = `https://46zwadhds2.execute-api.eu-west-2.amazonaws.com/prod/${endpoint}`
+            var url = window.api_root + endpoint
             console.log('Making request to:', url)
             fetch(url, options)
             .then(
@@ -43,6 +42,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
     Auth.currentSession()
     .then(
         data => {
+            console.log('currentSession:', data)
             var IDToken = data.getIdToken().getJwtToken()
             // console.log(IDToken)
             // console.log(JSON.stringify(body))
@@ -55,7 +55,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
                     'Content-Type': 'application/json'
                 }
             }
-            var url = `https://46zwadhds2.execute-api.eu-west-2.amazonaws.com/prod/${endpoint}`
+            var url = window.api_root + endpoint
             console.log('Making request to:', url)
             fetch(url , options) 
             .then(
@@ -68,7 +68,7 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
                 }
             )
             .then(
-                data => callback(data)
+                data => callback ? callback(data) : null
             )
             .catch(
                 err =>  handleErr(err)
@@ -76,50 +76,3 @@ export const makePostRequest = (endpoint, body, callback, handleErr=(err)=>{cons
         }
     )
 }
-
-export const postStyle = (style) => {
-    console.log('posting style')
-    Auth.currentSession()
-    .then(
-        data => {
-            console.log('currentSession:', data)
-            var IDToken = data.getIdToken().getJwtToken()
-            var options = {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(style),
-                headers: {
-                    "Authorization": IDToken,
-                    'Content-Type': 'application/json'
-                }
-            }
-            fetch('https://ikpilfsw9a.execute-api.eu-west-2.amazonaws.com/prod/post-my-liked-brands', options)
-            .then(
-                data => {
-                    console.log('brands sent')
-                }
-            )
-        },
-        err => {
-            console.log('AN ERROR OCCURED WHILST GETTING THE SESSION')
-            console.log(err)
-        }
-    )
-}
-
-export const getMyRequests = makeGetRequest('get-my-requests', 
-
-)
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        notify: (content) => {
-            dispatch({
-                type: "NOTIFY",
-                content
-            })
-        }
-    }
-}
-
-// export var makePostRequest = connect(null, mapDispatchToProps)(makePostRequest)

@@ -21,24 +21,27 @@
   --lilac: #BCA2F2;
   --green: #89C497;
   --pink: #FFC8DB;
-  --orange: #EA653C;
+  --orange: #ff822e;
   --blue: #C6E0F5;
   --grey: #707070;
   --navy: #1E144D;
 
   /* COLORS */
-  --color1: white;
-  --color1g: grey;
+  --color1: black;
+  --color1g: white;
+  background-color: var(--color1);
 
-  --color2: #26ccff;
-  --color2g: #68d3f3;
+  --color2: var(--nude);
+  --color2g: rgb(172, 172, 172);
 
-  color: black;
-  background: linear-gradient(var(--color1), var(--color1g)) fixed;
+  --textColor: var(--orange);
+  
+  color: var(--textColor);
 
   /* FONTS */
   --font1: "Montserrat";
-  --font2: comfortaa;
+  /* --font2: comfortaa; */
+  --font2: "Montserrat";
   --font3: poppins;
 
   /* FONT SIZING */
@@ -67,18 +70,20 @@
   --mobile: 480px;
   --tablet: 768px;
   --desktop: 992px;
-
 }
 
 html {
-  scroll-behavior: smooth;
-  color: black;
-  color: #525f7f;
+  /* scroll-behavior: smooth; */
+  /* color: #525f7f; */
   font-family: var(--font1);
 }
 
-/* a:link {  color: black;text-decoration: none; } */
-a:link { color: black;text-decoration: none; }
-a​:visited {  color: black; text-decoration: none;}
-a​:hover {  color: black; }
-a { color: black;}
+a​:visited, a:link, a:hover, a {  
+  color: var(--color1); 
+  text-decoration: none;
+}
+
+.text-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
