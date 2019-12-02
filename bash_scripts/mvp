@@ -1,3 +1,6 @@
 npx create-react-app $1
 cp -r ~/mvp/mvp-core/templates/webapp/* ./$1/
+cd $1
+npm install -S
+npm start
 #npm install aws-amplif
