@@ -28,7 +28,7 @@ Amplify.configure({
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-        identityPoolId: 'eu-west-2:a9b6789c-da76-4a3e-ae38-93373981ff11',
+        // identityPoolId: '',
         
         // REQUIRED - Amazon Cognito Region
         region: 'eu-west-2',
@@ -38,23 +38,23 @@ Amplify.configure({
         //identityPoolRegion: 'eu-west-2',
  
         // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: 'eu-west-2_XRYfK4o2B',
+        userPoolId: 'POOL_ID',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: '12rljt0gbcrc780r5tdeoctdvk',
+        userPoolWebClientId: 'WEB_CLIENT_ID',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         mandatorySignIn: true
     },
     Storage: {
         AWSS3: {
-            bucket: 'theaicore-data', //REQUIRED -  Amazon S3 bucket
-            region: 'eu-west-2', //OPTIONAL -  Amazon service region
+            bucket: 'BUCKETNAME', //REQUIRED -  Amazon S3 bucket
+            region: 'REGION', //OPTIONAL -  Amazon service region
         }
     }
 });
 
-window.api_root = 'https://yjr86j4o4f.execute-api.eu-west-2.amazonaws.com/prod/'
+window.api_root = 'ENTER YOUR API ENDPOINT HERE'
 
 const slideUp = (state={open: false, content: null}, action) => {
     switch (action.type) {
