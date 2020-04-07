@@ -179,7 +179,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router >                   
-                    <div className="App">
+                    <div className="App" style={{minHeight: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                         <Helmet>
                             <title>{store.getState().app.name}</title>
                               <meta name="ABC" content="ABC" />

@@ -1,3 +1,7 @@
+#root {
+  height: 100vh;
+}
+
 :root {
   /* COLORS */
   --purple: #fee2f8;
