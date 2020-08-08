@@ -1,4 +1,5 @@
 import { Auth } from "aws-amplify"
+import { API_ROOT } from "./App"
 
 export function importAll(r) {
   // var r = require.context(directory, false)

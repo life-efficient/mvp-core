@@ -66,7 +66,7 @@ Amplify.configure({
     }
 });
 
-window.api_root = 'ENTER YOUR API ENDPOINT HERE'
+export const API_ROOT = 'ENTER YOUR API ENDPOINT HERE'
 
 const slideUp = (state={open: false, content: null}, action) => {
     switch (action.type) {
@@ -192,7 +192,7 @@ class App extends Component {
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <Router >                   
-                        <div className="App" style={{minHeight: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                        <div className="App" style={{minHeight: '100%', display: 'flex', flexDirection: 'column'}}>
                             <Helmet>
                                 <title>{store.getState().app.name}</title>
                                 <meta name="ABC" content="ABC" />
