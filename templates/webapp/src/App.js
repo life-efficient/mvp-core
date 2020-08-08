@@ -15,13 +15,25 @@ import AppRoutes from "./components/app/AppRoutes";
 import SignUp from "./components/landing/SignUp"
 import favicon from "./images/favicon.ico"
 import { makeGetRequest } from "./api_calls";
-import About from "./components/landing/About"
 
-import createHistory from "history/createBrowserHistory"
-export const history = createHistory()
-history.listen((location, action) => {
-    window.scrollTo(0, 0)
-})
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
 
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 Amplify.configure({
@@ -178,27 +190,28 @@ class App extends Component {
         console.log('rendering app')
         return (
             <Provider store={store}>
-                <Router >                   
-                    <div className="App" style={{minHeight: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-                        <Helmet>
-                            <title>{store.getState().app.name}</title>
-                              <meta name="ABC" content="ABC" />
-                            <link rel="icon" href={favicon} sizes="16x16" />
-                            <script src="https://kit.fontawesome.com/2de6851308.js" crossorigin="anonymous"></script>
+                <ThemeProvider theme={theme}>
+                    <Router >                   
+                        <div className="App" style={{minHeight: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                            <Helmet>
+                                <title>{store.getState().app.name}</title>
+                                <meta name="ABC" content="ABC" />
+                                <link rel="icon" href={favicon} sizes="16x16" />
+                                <script src="https://kit.fontawesome.com/2de6851308.js" crossorigin="anonymous"></script>
 
-                        </Helmet>
-                        <Switch>
-                            <ProtectedRoute path="/app" component={AppRoutes}/>
-                            <Route path="/login" component={Login} />
-                            <Route path="/signup" component={SignUp} />
-                            <Route path="/about" component={About} />
-                            <Route path="/" component={LandingIndex} />
-                            <Route component={NotFound} path=""/> 
-                        </Switch>
-                        <Modal />
-                        <SideMenu />
-                    </div>
-                </Router>
+                            </Helmet>
+                            <Switch>
+                                <ProtectedRoute path="/app" component={AppRoutes}/>
+                                <Route path="/login" component={Login} />
+                                <Route path="/signup" component={SignUp} />
+                                <Route path="/" component={LandingIndex} />
+                                <Route component={NotFound} path=""/> 
+                            </Switch>
+                            <Modal />
+                            <SideMenu />
+                        </div>
+                    </Router>
+                </ThemeProvider>
             </Provider>
         )
     }

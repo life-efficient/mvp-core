@@ -2,11 +2,9 @@ import React, { Component } from "react"
 // import "./Index.css"
 import { connect } from "react-redux"
 import { Button, LandingPage } from "mvp-webapp"
-import { makePostRequest } from "../../api_calls"
 import { css } from "@emotion/core"
 /** @jsx jsx */ import { jsx } from '@emotion/core'
 import { importAll } from "../../utils"
-import Testimonials from "./Testimonials"
 
 var heros = importAll(require.context('../../images/heros'), false)
 heros = Object.values(heros)
